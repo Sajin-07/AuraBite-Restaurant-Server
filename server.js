@@ -37,9 +37,15 @@ app.use(express.json());
 app.use(express.urlencoded());
 const { v4: uuidv4 } = require("uuid");
 app.use(cookieParser());
+// app.use(
+//   cors({
+//     origin: ["http://localhost:5173", "http://localhost:5174"],
+//     credentials: true,
+//   })
+// );
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["https://fir-uni-af3fa.web.app/"],
     credentials: true,
   })
 );
