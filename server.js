@@ -1,6 +1,8 @@
+
 const express = require("express");
 const app = express();
-const db = require("./db");
+// const db = require("./db");
+const connectDB = require("./db");
 require("dotenv").config();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -18,6 +20,10 @@ const cookieParser = require("cookie-parser");
 const axios = require("axios");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // app.options('*', cors());
+// Connect to database
+connectDB()
+  .then(() => console.log('Database connected for serverless function'))
+  .catch(err => console.error('Database connection failed:', err));
 
 ///////////////////////////////
 
@@ -1064,10 +1070,17 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log("Server is running on https://aura-bite-server.vercel.app");
-});
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log("Server is running on https://aura-bite-server.vercel.app");
+// });
+
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;
 
