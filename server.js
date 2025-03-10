@@ -39,7 +39,7 @@ const { v4: uuidv4 } = require("uuid");
 app.use(cookieParser());
 // app.use(
 //   cors({
-//     origin: ["http://localhost:5173", "http://localhost:5174"],
+//     origin: ["https://fir-uni-af3fa.web.app", "http://localhost:5174"],
 //     credentials: true,
 //   })
 // );
@@ -769,7 +769,7 @@ app.get("/order-stats", async (req, res) => {
 //     total_amount: paymentData.totalPrice,
 //     currency: 'BDT',
 //     tran_id: 'REF123', // generate unique transaction ID
-//     success_url: 'http://localhost:5000/success-payment',
+//     success_url: 'https://aura-bite-server.vercel.app/success-payment',
 //     fail_url: 'http://yourdomain.com/fail',
 //     cancel_url: 'http://yourdomain.com/cancel',
 //     shipping_method: 'NO',
@@ -800,9 +800,9 @@ app.post("/create-payment", async (req, res) => {
       total_amount: paymentData.totalPrice,
       currency: "BDT",
       tran_id: uuidv4(), // Generate a unique transaction ID
-      success_url: "http://localhost:5000/success-payment",
-      fail_url: "http://localhost:5000/fail-payment",
-      cancel_url: "http://localhost:5000/cancel-payment",
+      success_url: "https://aura-bite-server.vercel.app/success-payment",
+      fail_url: "https://aura-bite-server.vercel.app/fail-payment",
+      cancel_url: "https://aura-bite-server.vercel.app/cancel-payment",
       shipping_method: "NO",
       product_name: "Restaurant Order",
       product_category: "Food",
@@ -1004,7 +1004,7 @@ app.post("/success-payment", async (req, res) => {
     }
 
     // Redirect to success page
-    return res.redirect("http://localhost:5173/dashboard/Success");
+    return res.redirect("https://fir-uni-af3fa.web.app/dashboard/Success");
   } catch (error) {
     console.error("Error processing success-payment:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -1027,7 +1027,7 @@ app.post("/fail-payment", async (req, res) => {
       return res.status(404).json({ message: "Transaction not found" });
     }
     // Redirect user to the fail page
-    return res.redirect("http://localhost:5173/dashboard/Fail");
+    return res.redirect("https://fir-uni-af3fa.web.app/dashboard/Fail");
   } catch (error) {
     console.error("Error processing fail-payment:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -1049,7 +1049,7 @@ app.post("/cancel-payment", async (req, res) => {
       return res.status(404).json({ message: "Transaction not found" });
     }
     // Redirect user to the cancel page
-    return res.redirect("http://localhost:5173/dashboard/Cancel");
+    return res.redirect("https://fir-uni-af3fa.web.app/dashboard/Cancel");
   } catch (error) {
     console.error("Error processing cancel-payment:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -1066,8 +1066,10 @@ app.get('/health', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log("Server is running on http://localhost:5000");
+  console.log("Server is running on https://aura-bite-server.vercel.app");
 });
+
+module.exports = app;
 
 /**
  * --------------------------------
@@ -1114,7 +1116,7 @@ app.listen(PORT, () => {
 // ///////////////////////////////////////////////////////////////////////////////////////////
 
 //     // Redirect to success page
-//     return res.redirect("http://localhost:5173/dashboard/Success");
+//     return res.redirect("https://fir-uni-af3fa.web.app/dashboard/Success");
 //   } catch (error) {
 //     console.error("Error processing success-payment:", error);
 //     return res.status(500).json({ message: "Internal Server Error" });
@@ -1185,7 +1187,7 @@ app.listen(PORT, () => {
 // ///////////////////////////////////////////////////////////////////////////////////////////
 
 //     // Redirect to success page
-//     return res.redirect("http://localhost:5173/dashboard/Success");
+//     return res.redirect("https://fir-uni-af3fa.web.app/dashboard/Success");
 //   } catch (error) {
 //     console.error("Error processing success-payment:", error);
 //     return res.status(500).json({ message: "Internal Server Error" });
