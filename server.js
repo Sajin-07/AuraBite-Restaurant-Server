@@ -1,8 +1,6 @@
-
 const express = require("express");
 const app = express();
-// const db = require("./db");
-const connectDB = require("./db");
+const db = require("./db");
 require("dotenv").config();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -20,10 +18,6 @@ const cookieParser = require("cookie-parser");
 const axios = require("axios");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // app.options('*', cors());
-// Connect to database
-connectDB()
-  .then(() => console.log('Database connected for serverless function'))
-  .catch(err => console.error('Database connection failed:', err));
 
 ///////////////////////////////
 
@@ -51,7 +45,7 @@ app.use(cookieParser());
 // );
 app.use(
   cors({
-    origin: ["https://fir-uni-af3fa.web.app/"],
+    origin: ["https://fir-uni-af3fa.web.app"],
     credentials: true,
   })
 );
@@ -137,7 +131,9 @@ app.post("/jwt", async (req, res) => {
       // secure: true, //production  a true dibo
       secure: true, //production  a true dibo
       // sameSite: "none",
-      sameSite: "lax",
+      // sameSite: "lax",
+      sameSite: "none",
+      maxAge: 3600000 // 1 hour
     })
     .send({ success: true });
 });
@@ -1075,15 +1071,15 @@ app.get('/health', (req, res) => {
 //   console.log("Server is running on https://aura-bite-server.vercel.app");
 // });
 
-if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-}
-
 module.exports = app;
 
+// Start the server only when running locally
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running locally on port ${PORT}`);
+  });
+}
 /**
  * --------------------------------
  *      NAMING CONVENTION
